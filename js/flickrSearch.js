@@ -1,12 +1,23 @@
 $(document).ready(function(){
-  
-  //write your solution here...
-    
+  $('#search').on('click', function(e) {
+    e.preventDefault();
+    searchImages();
+  });
 });
+
+function searchImages() {
+  var keyword = $('#keyword').val();
+  var url = "https://api.flickr.com/services/rest/?format=json&method=flickr.photos.search&api_key=2fd41b49fedfd589dc265350521ab539&tags=" + keyword + "&jsoncallback=?";
+  $.getJSON(url, function (data) {
+    data.photos.photo.forEach(function(photo){
+      $('#feed').append('<img src="http://farm' + photo.farm + '.staticflickr.com/' + photo.server + '/'+ photo.id +'_' + photo.secret+ '.jpg">');
+    });
+  });
+}
 
 /*
 
-API url: 
+API url:
 
 https://www.flickr.com/services/api/request.rest.html
 
